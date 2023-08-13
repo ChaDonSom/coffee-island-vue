@@ -3,6 +3,7 @@ import MenuProduct from "@/components/MenuProduct.vue"
 import MenuProductThumbnail from "@/components/MenuProductThumbnail.vue"
 import { useMenuPinia, type Product, productCardFlipTransitionFirst } from "@/stores/menu"
 import { onMounted, ref } from "vue"
+// @ts-ignore
 import autoAnimate from "@formkit/auto-animate"
 import { RouterLink, useRouter } from "vue-router/auto"
 

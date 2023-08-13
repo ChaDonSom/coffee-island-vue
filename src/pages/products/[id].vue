@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from "vue-router/auto"
-import { productCardFlipTransitionFirst, productCardFlipTransitionLast, useMenuPinia } from "../../stores/menu"
+import { type Product, productCardFlipTransitionFirst, productCardFlipTransitionLast, useMenuPinia } from "../../stores/menu"
 import { computed, onMounted, ref } from "vue"
 
 const menu = useMenuPinia()
 const $route = useRoute()
-const product = computed(() => menu.productsData[$route.params.id])
+const product = computed<Product>(() => menu.productsData[Number('id' in $route.params ? $route.params?.id : '')])
 
 const $router = useRouter()
 function addToCartAndReturn() {
