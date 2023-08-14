@@ -12,6 +12,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.7.0",
     "@vueuse/core": "^10.3.0",
+    "flipping": "^1.1.0",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"

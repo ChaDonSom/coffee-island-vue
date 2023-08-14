@@ -17,6 +17,7 @@ const menu = useMenuPinia()
     <img
       class="w-32 h-32 object-cover rounded-3xl shadow-xl shadow-gray-400 dark:shadow-gray-900 border-gray-700 border-2"
       :src="product.img"
+      :data-flip-key="`product-${product.id}`"
     />
     <div class="flex flex-col items-center">
       <span>{{ product.name }}</span>

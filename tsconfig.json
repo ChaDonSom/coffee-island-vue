@@ -3,6 +3,12 @@
     "env.d.ts", "src/**/*", "src/**/*.vue",
     "typed-router.d.ts"
   ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
   "references": [
     {
       "path": "./tsconfig.node.json"

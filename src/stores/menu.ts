@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
 import { useStorage } from "@vueuse/core"
+import Flipping from "flipping/dist/flipping.web.js"
 
 const randomCoffeeNames = [
   "Cappuccino",
@@ -56,7 +57,7 @@ function useMenu() {
   const purseTotal = useStorage<number>("coffee-island-purse", 100)
   purseTotal.value = 100
 
-  const thumbnailTransitionData = ref<Record<string, any>>({})
+  const flipping = new Flipping()
 
   return {
     totalProducts,
@@ -67,7 +68,7 @@ function useMenu() {
     asDollars,
     purseTotal,
     cartTotalNumber,
-    thumbnailTransitionData,
+    flipping,
   }
 }
 
