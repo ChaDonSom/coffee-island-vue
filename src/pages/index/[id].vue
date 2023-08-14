@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useRoute, useRouter, definePage } from "vue-router/auto"
-import { type Product, productCardFlipTransitionFirst, productCardFlipTransitionLast, useMenuPinia } from "../../stores/menu"
+import { type Product, useMenuPinia } from "../../stores/menu"
 import { computed, onMounted, ref } from "vue"
 
 definePage({
@@ -24,7 +24,7 @@ onMounted(() => menu.flipping.flip())
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-3 bg-transparent">
+  <div class="flex flex-col items-center gap-3 bg-transparent" @drag="">
     <img
       ref="imgRef"
       class="object-cover rounded-3xl shadow-xl shadow-gray-400 dark:shadow-gray-900 border-gray-700 border-2 max-w-3xl max-h-80"

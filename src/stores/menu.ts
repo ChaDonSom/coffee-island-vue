@@ -26,9 +26,6 @@ const randomCoffeeNames = [
   "Café con Panna",
 ]
 
-export const productCardFlipTransitionFirst = ref<DOMRect|null>(null)
-export const productCardFlipTransitionLast = ref<DOMRect|null>(null)
-
 export type Product = { id: number; name: string; img: string; price: number }
 function useMenu() {
   const totalProducts = ref(30)

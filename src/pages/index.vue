@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import MenuProduct from "@/components/MenuProduct.vue"
 import MenuProductThumbnail from "@/components/MenuProductThumbnail.vue"
-import { useMenuPinia, type Product, productCardFlipTransitionFirst } from "@/stores/menu"
+import { useMenuPinia, type Product } from "@/stores/menu"
 import { onMounted, ref, watch } from "vue"
 // @ts-ignore
 import autoAnimate from "@formkit/auto-animate"
@@ -46,7 +46,7 @@ watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate:
     </div>
 
     <Teleport to="body">
-      <Transition name="fade">
+      <Transition name="fade-zoom">
         <div v-if="showModal" class="modal-route" @click="$router.go(-1)">
           <div class="modal-content">
             <RouterView />
@@ -64,7 +64,7 @@ watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate:
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba($color: #5a5a5a, $alpha: 0.5);
+  background: rgba($color: #5a5a5a, $alpha: 0.7);
   .modal-content {
     width: 50%;
     position: absolute;
@@ -74,12 +74,18 @@ watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate:
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.fade-zoom-enter-active,
+.fade-zoom-leave-active {
   transition: opacity 0.18s ease;
+  .modal-content {
+    transition: transform 0.18s ease;
+  }
 }
-.fade-enter-from,
-.fade-leave-to {
+.fade-zoom-enter-from,
+.fade-zoom-leave-to {
   opacity: 0;
+  .modal-content {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
 }
 </style>
