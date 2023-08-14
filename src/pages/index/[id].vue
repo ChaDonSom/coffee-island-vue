@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useRoute, useRouter, definePage } from "vue-router/auto"
 import { type Product, useMenuPinia } from "../../stores/menu"
-import { computed, onMounted, ref } from "vue"
+import { computed, onBeforeUnmount, onMounted, ref } from "vue"
+import { useMenuProductDragToDismiss } from "@/composables/menu-product-drag-to-dismiss"
 
 definePage({
   meta: {
@@ -21,6 +22,10 @@ function addToCartAndReturn() {
 
 const imgRef = ref<HTMLImageElement>()
 onMounted(() => menu.flipping.flip())
+useMenuProductDragToDismiss(imgRef, product)
+
+onMounted(() => document.body.style.overflow = 'hidden')
+onBeforeUnmount(() => document.body.style.overflow = 'unset')
 </script>
 
 <template>
