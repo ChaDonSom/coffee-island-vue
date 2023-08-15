@@ -79,7 +79,7 @@ const goBackWithAnimation = () => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .fade-zoom-enter-active,
 .fade-zoom-leave-active {
   transition: opacity 0.18s ease;
