@@ -37,8 +37,8 @@ const goBackWithAnimation = () => {
     { transform: transform, transformOrigin: 'top left' },
     { transform: 'unset' }
   ], {
-    duration: 300,
-    easing: "cubic-bezier(0.3, 0, 0.5, 1)",
+    duration: 400,
+    easing: "cubic-bezier(0.7, 0, 0.3, 1)",
   })
 }
 </script>
