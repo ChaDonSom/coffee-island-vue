@@ -71,7 +71,7 @@ const goBackWithAnimation = () => {
           @click="goBackWithAnimation"
         >
           <div class="modal-content w-1/2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <RouterView />
+            <RouterView :goBackWithAnimation="goBackWithAnimation" />
           </div>
         </div>
       </Transition>

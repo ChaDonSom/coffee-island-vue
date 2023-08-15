@@ -1,8 +1,15 @@
 <script lang="ts" setup>
 import { useRoute, useRouter, definePage } from "vue-router/auto"
-import { type Product, useMenuPinia } from "../../stores/menu"
-import { computed, onBeforeUnmount, onMounted, ref } from "vue"
+import { type Product, useMenuPinia } from "@/stores/menu"
+import { PropType, computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { useMenuProductDragToDismiss } from "@/composables/menu-product-drag-to-dismiss"
+
+defineProps({
+  goBackWithAnimation: {
+    type: Function as PropType<() => void>,
+    required: false,
+  },
+})
 
 definePage({
   meta: {
@@ -20,7 +27,7 @@ function addToCartAndReturn() {
   $router.go(-1)
 }
 
-const imgRef = ref<HTMLImageElement|null>(null)
+const imgRef = ref<HTMLImageElement | null>(null)
 onMounted(() => menu.flipping.flip())
 useMenuProductDragToDismiss(imgRef, product)
 
@@ -43,7 +50,7 @@ onBeforeUnmount(() => (document.body.style.overflow = "unset"))
     </div>
     <button
       class="py-3 px-6 rounded-[2.5rem] bg-gray-200 hover:bg-gray-100 transition-colors dark:text-gray-900"
-      @click.stop="$router.go(-1)"
+      @click.stop="goBackWithAnimation"
     >
       Back
     </button>
