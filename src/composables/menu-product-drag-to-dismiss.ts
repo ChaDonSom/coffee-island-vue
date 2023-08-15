@@ -1,8 +1,10 @@
 import { Product } from "@/stores/menu"
-import { Ref, onMounted } from "vue"
+import { Ref, onMounted, watch, ref } from "vue"
+import { useRoute } from "vue-router/auto"
 import { useRouter } from "vue-router/auto"
 
 let target: HTMLElement | null = null
+export const wasDraggedToDismiss = ref(false)
 export function useMenuProductDragToDismiss(el: Ref<HTMLElement | null>, product: Ref<Product | null>) {
   onMounted(() => {
     if (!el.value) return
@@ -24,6 +26,7 @@ export function useMenuProductDragToDismiss(el: Ref<HTMLElement | null>, product
   }
 
   const $router = useRouter()
+  const $route = useRoute()
   function finishDrag(e: MouseEvent | TouchEvent) {
     if (!y0) return
     const y1 = e instanceof MouseEvent ? e.clientY : e.changedTouches[0].clientY
@@ -35,12 +38,18 @@ export function useMenuProductDragToDismiss(el: Ref<HTMLElement | null>, product
     target.style.transform = ""
     y0 = undefined
     if (deltaY > 100) {
+      wasDraggedToDismiss.value = true
       let { newX, newY, newW, newH } = getNewValues()
       target.style.transition = "transform 0.2s ease-in-out"
       target.style.transform = `translate(${newX}px, ${newY}px) scale(${newW}, ${newH})`
-      setTimeout(() => $router.go(-1), 200)
+      setTimeout(() => {
+        watch(() => $route, () => setTimeout(() => wasDraggedToDismiss.value = false, 200), { deep: true })
+        $router.go(-1)
+      }, 200)
     }
   }
+
+  return { wasDraggedToDismiss }
 }
 
 let y0 = undefined

@@ -7,6 +7,8 @@ import { onMounted, ref, watch } from "vue"
 import autoAnimate from "@formkit/auto-animate"
 import { RouterLink, useRouter } from "vue-router/auto"
 import { useRoute } from "vue-router/auto"
+import { wasDraggedToDismiss } from "@/composables/menu-product-drag-to-dismiss"
+import getTransformForFlip from "@/composables/useFlip"
 
 const menu = useMenuPinia()
 const mainRef = ref<HTMLElement | null>(null)
@@ -22,6 +24,23 @@ function openProductModal(product: Product) {
 const showModal = ref(false)
 const $route = useRoute()
 watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate: true, deep: true })
+
+const goBackWithAnimation = () => {
+  const first = document.querySelector("[data-menu-product-modal]") as HTMLElement
+  const firstBounding = first.getBoundingClientRect()
+  const query = `[data-flip-key="${first.dataset.flipKey}"]:not([data-menu-product-modal])`
+  const last = document.querySelector(query) as HTMLElement
+  const lastBounding = last.getBoundingClientRect()
+  $router.back()
+  const transform = getTransformForFlip(firstBounding, lastBounding)
+  last.animate([
+    { transform: transform, transformOrigin: 'top left' },
+    { transform: 'unset' }
+  ], {
+    duration: 300,
+    easing: "cubic-bezier(0.3, 0, 0.5, 1)",
+  })
+}
 </script>
 
 <template>
@@ -47,7 +66,7 @@ watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate:
 
     <Teleport to="body">
       <Transition name="fade-zoom">
-        <div v-if="showModal" class="modal-route" @click="$router.go(-1)">
+        <div v-if="showModal" class="modal-route" @click="goBackWithAnimation">
           <div class="modal-content">
             <RouterView />
           </div>
@@ -64,7 +83,7 @@ watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate:
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba($color: #5a5a5a, $alpha: 0.7);
+  background: rgba($color: #cdcdcd, $alpha: 0.9);
   .modal-content {
     width: 50%;
     position: absolute;

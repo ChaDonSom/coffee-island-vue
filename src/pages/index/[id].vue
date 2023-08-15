@@ -6,13 +6,13 @@ import { useMenuProductDragToDismiss } from "@/composables/menu-product-drag-to-
 
 definePage({
   meta: {
-    modal: true
-  }
+    modal: true,
+  },
 })
 
 const menu = useMenuPinia()
 const $route = useRoute()
-const product = computed<Product>(() => menu.productsData[Number('id' in $route.params ? $route.params?.id : '')])
+const product = computed<Product>(() => menu.productsData[Number("id" in $route.params ? $route.params?.id : "")])
 
 const $router = useRouter()
 function addToCartAndReturn() {
@@ -24,16 +24,17 @@ const imgRef = ref<HTMLImageElement>()
 onMounted(() => menu.flipping.flip())
 useMenuProductDragToDismiss(imgRef, product)
 
-onMounted(() => document.body.style.overflow = 'hidden')
-onBeforeUnmount(() => document.body.style.overflow = 'unset')
+onMounted(() => (document.body.style.overflow = "hidden"))
+onBeforeUnmount(() => (document.body.style.overflow = "unset"))
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-3 bg-transparent" @drag="">
+  <div class="flex flex-col items-center gap-3 bg-transparent">
     <img
       ref="imgRef"
       class="object-cover rounded-3xl shadow-xl shadow-gray-400 dark:shadow-gray-900 border-gray-700 border-2 max-w-3xl max-h-80"
       :data-flip-key="`product-${product.id}`"
+      data-menu-product-modal="true"
       :src="product.img"
     />
     <div class="flex flex-col items-center">
