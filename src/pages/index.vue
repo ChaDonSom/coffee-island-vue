@@ -18,12 +18,16 @@ onMounted(() => autoAnimate(mainRef.value))
 const $router = useRouter()
 function openProductModal(product: Product) {
   menu.flipping.read()
-  $router.push('/' + product.id)
+  $router.push("/" + product.id)
 }
 
 const showModal = ref(false)
 const $route = useRoute()
-watch(() => $route, value => showModal.value = !!value.meta?.modal, { immediate: true, deep: true })
+watch(
+  () => $route,
+  (value) => (showModal.value = !!value.meta?.modal),
+  { immediate: true, deep: true }
+)
 
 const goBackWithAnimation = () => {
   const first = document.querySelector("[data-menu-product-modal]") as HTMLElement
@@ -33,10 +37,7 @@ const goBackWithAnimation = () => {
   const lastBounding = last.getBoundingClientRect()
   $router.back()
   const transform = getTransformForFlip(firstBounding, lastBounding)
-  last.animate([
-    { transform: transform, transformOrigin: 'top left' },
-    { transform: 'unset' }
-  ], {
+  last.animate([{ transform: transform, transformOrigin: "top left" }, { transform: "unset" }], {
     duration: 400,
     easing: "cubic-bezier(0.7, 0, 0.3, 1)",
   })
@@ -48,9 +49,7 @@ const goBackWithAnimation = () => {
     <div class="flex items-center gap-3 justify-end mb-3">
       <span class="mr-auto">You have: {{ menu.asDollars(menu.purseTotal) }}</span>
       <span>Cart: {{ menu.cartTotal }}</span>
-      <div
-        class="my-5 flex flex-wrap gap-2 items-center justify-end"
-      >
+      <div class="my-5 flex flex-wrap gap-2 items-center justify-end">
         <MenuProductThumbnail v-for="productId of menu.cart" :product="menu.productsData[productId]" />
       </div>
       <RouterLink
@@ -66,8 +65,12 @@ const goBackWithAnimation = () => {
 
     <Teleport to="body">
       <Transition name="fade-zoom">
-        <div v-if="showModal" class="modal-route" @click="goBackWithAnimation">
-          <div class="modal-content">
+        <div
+          v-if="showModal"
+          class="w-full h-full fixed top-0 left-0 bg-zinc-300/90 dark:bg-zinc-700/90"
+          @click="goBackWithAnimation"
+        >
+          <div class="modal-content w-1/2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <RouterView />
           </div>
         </div>
@@ -76,23 +79,7 @@ const goBackWithAnimation = () => {
   </div>
 </template>
 
-<style scoped lang="scss">
-.modal-route {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba($color: #cdcdcd, $alpha: 0.9);
-  .modal-content {
-    width: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
+<style scoped>
 .fade-zoom-enter-active,
 .fade-zoom-leave-active {
   transition: opacity 0.18s ease;

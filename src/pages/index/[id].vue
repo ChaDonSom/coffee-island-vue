@@ -43,7 +43,7 @@ onBeforeUnmount(() => (document.body.style.overflow = "unset"))
     </div>
     <button
       class="py-3 px-6 rounded-[2.5rem] bg-gray-200 hover:bg-gray-100 transition-colors dark:text-gray-900"
-      @click="$router.go(-1)"
+      @click.stop="$router.go(-1)"
     >
       Back
     </button>
