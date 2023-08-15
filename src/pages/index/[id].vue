@@ -36,10 +36,10 @@ onBeforeUnmount(() => (document.body.style.overflow = "unset"))
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-3 bg-transparent">
+  <div class="flex flex-col items-center gap-3 bg-transparent w-full">
     <img
       ref="imgRef"
-      class="object-cover rounded-3xl shadow-xl shadow-gray-400 dark:shadow-gray-900 border-gray-700 border-2 max-w-3xl max-h-80"
+      class="object-cover rounded-3xl shadow-xl shadow-gray-400 dark:shadow-gray-900 border-gray-700 border-2 max-w-full md:max-w-3xl max-h-80"
       :data-flip-key="`product-${product.id}`"
       data-menu-product-modal="true"
       :src="product.img"
