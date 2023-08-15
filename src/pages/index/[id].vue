@@ -20,7 +20,7 @@ function addToCartAndReturn() {
   $router.go(-1)
 }
 
-const imgRef = ref<HTMLImageElement>()
+const imgRef = ref<HTMLImageElement|null>(null)
 onMounted(() => menu.flipping.flip())
 useMenuProductDragToDismiss(imgRef, product)
 

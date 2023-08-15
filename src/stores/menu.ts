@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
 import { useStorage } from "@vueuse/core"
+// @ts-ignore
 import Flipping from "flipping/dist/flipping.web.js"
 
 const randomCoffeeNames = [
